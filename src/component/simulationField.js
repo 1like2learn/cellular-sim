@@ -1,46 +1,28 @@
-import React, { useState } from 'react';
-import Cell from '../helpers/cells'
+import React, { useState, useEffect } from 'react';
+import addCell from '../helpers/addCell';
 
-export default function SimulationField({row, column}){
-  const [ grid, setGrid ] = useState({})
-  let c = 0;
-  let r = 0;
-  let tempGrid = {}
-  while (r < row){
-    if (r === 0) {
-      const tempCell = Cell(r, c)
-      tempCell.tL = false
-      tempCell.t = false
-      tempCell.tR = false
-      tempCell.l = false
-      tempCell.Bl = false
-      tempGrid[`${r}${c}`] = tempCell
-    }
-    else if(r === row - 1){
-      const tempCell = Cell(r, c)
-      tempCell.tL = false
-      tempCell.t = false
-      tempCell.tR = false
-      tempCell.r = false
-      tempCell.bR = false
-      tempCell.l = tempGrid[`${r-1}${c}`]
-      tempGrid[`${r}${c}`] = tempCell
-    }
-    else{
-      const tempCell = Cell(r, c)
-      tempCell.tL = false
-      tempCell.t = false
-      tempCell.tR = false
-      tempCell.bR = false
-      tempCell.l = tempGrid[`${r-1}${c}`]
-      tempGrid[`${r}${c}`] = tempCell
-      tempGrid[`${r-1}${c}`].r = tempCell
-    }
-  };
+export default function SimulationField({rows, columns}){
+  const [ grid, setGrid ] = useState({});
+  console.log('grid', grid);
+  
+  useEffect(() => {
+    let tempGrid = {}
+    for(let i = 0; i < rows - 1; i++){
+      for(let j = 0; j < columns - 1; j++){
+        tempGrid = {...tempGrid, [`${j},${i}`]: addCell(j, i, tempGrid)}
+      };
+    };
+    setGrid(tempGrid)
+  }, [rows, columns])
 
   return(
     <div>
-
+      <h2>test</h2>
+      {Object.keys(grid).forEach( key => {
+        return (
+          <div>{key}</div>
+        )
+      })}
     </div>
   );
 }

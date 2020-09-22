@@ -5,8 +5,8 @@ export default function FunctionButtons({setCoord}){
   const onSubmit = (data) => {
     
     setCoord({
-      row: data.row,
-      column: data.column
+      rows: data.rows,
+      columns: data.columns
     })
   }
   return (
@@ -14,7 +14,7 @@ export default function FunctionButtons({setCoord}){
       <form onSubmit ={handleSubmit(onSubmit)}>
         <label>Define Grid Dimensions</label>
         <input
-          name = "row"
+          name = "rows"
           ref = {register({
             required: true,
             pattern: /^[1-9]\d*\.?[0]*$/
@@ -23,7 +23,7 @@ export default function FunctionButtons({setCoord}){
         />
         {errors.row && <span>Please enter a positive whole number.</span>}
         <input 
-          name = "column" 
+          name = "columns" 
           ref = {register({
             required: true,
             pattern: /^[1-9]\d*\.?[0]*$/
