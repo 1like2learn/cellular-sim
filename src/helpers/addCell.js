@@ -1,38 +1,38 @@
 import Cell from './cells'
-export default function addCell(column, row, grid){
+export default function addCell(row, column, grid){
   
-  const tempCell = new Cell(column, row);
-  if(grid[`${column - 1},${row + 1}`]){
-    tempCell.tL = grid[`${column - 1},${row + 1}`];
-    grid[`${column - 1},${row + 1}`].bR = tempCell;
+  const tempCell = new Cell(row, column);
+  if(grid[`${row + 1},${column - 1}`]){
+    tempCell.tL = grid[`${row + 1},${column - 1}`];
+    grid[`${row + 1},${column - 1}`].bR = tempCell;
   }
-  if(grid[`${column},${row + 1}`]){
-    tempCell.t = grid[`${column},${row + 1}`];
-    grid[`${column},${row + 1}`].b = tempCell;
+  if(grid[`${row + 1},${column}`]){
+    tempCell.t = grid[`${row + 1},${column}`];
+    grid[`${row + 1},${column}`].b = tempCell;
   }
-  if(grid[`${column + 1},${row + 1}`]){
-    tempCell.tR = grid[`${column + 1},${row + 1}`];
-    grid[`${column + 1},${row + 1}`].bL = tempCell;
+  if(grid[`${row + 1},${column + 1}`]){
+    tempCell.tR = grid[`${row + 1},${column + 1}`];
+    grid[`${row + 1},${column + 1}`].bL = tempCell;
   }
-  if(grid[`${column - 1},${row}`]){
-    tempCell.l = grid[`${column - 1},${row}`];
-    grid[`${column - 1},${row}`].r = tempCell;
+  if(grid[`${row},${column - 1}`]){
+    tempCell.l = grid[`${row},${column - 1}`];
+    grid[`${row},${column - 1}`].r = tempCell;
   }
-  if(grid[`${column + 1},${row}`]){
-    tempCell.r = grid[`${column + 1},${row}`];
-    grid[`${column + 1},${row}`].l = tempCell;
+  if(grid[`${row},${column + 1}`]){
+    tempCell.r = grid[`${row},${column + 1}`];
+    grid[`${row},${column + 1}`].l = tempCell;
   }
-  if(grid[`${column - 1},${row - 1}`]){
-    tempCell.bL = grid[`${column - 1},${row - 1}`];
-    grid[`${column - 1},${row - 1}`].tR = tempCell;
+  if(grid[`${row - 1},${column - 1}`]){
+    tempCell.bL = grid[`${row - 1},${column - 1}`];
+    grid[`${row - 1},${column - 1}`].tR = tempCell;
   }
-  if(grid[`${column},${row - 1}`]){
-    tempCell.b = grid[`${column},${row - 1}`]
-    grid[`${column},${row - 1}`].t = tempCell
+  if(grid[`${row - 1},${column}`]){
+    tempCell.b = grid[`${row - 1},${column}`]
+    grid[`${row - 1},${column}`].t = tempCell
   }
-  if(grid[`${column + 1},${row - 1}`]){
-    tempCell.bR = grid[`${column + 1},${row - 1}`]
-    grid[`${column + 1},${row - 1}`].tL = tempCell
+  if(grid[`${row - 1},${column + 1}`]){
+    tempCell.bR = grid[`${row - 1},${column + 1}`]
+    grid[`${row - 1},${column + 1}`].tL = tempCell
   }
   return tempCell
 }

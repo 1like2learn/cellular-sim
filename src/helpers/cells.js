@@ -1,7 +1,7 @@
 export default class Cell{
-  constructor(column, row){
-    this.column = column;
+  constructor(row, column){
     this.row = row;
+    this.column = column;
     this.alive = false;
     this.tL = null;
     this.t = null;
@@ -14,4 +14,12 @@ export default class Cell{
 
   }
 
+  toggleAlive(){
+    if (!this.alive) {
+      this.alive = true
+    }else {
+      this.alive = false
+    }
+    console.log('this.alive', this.alive);
+  }
 }
