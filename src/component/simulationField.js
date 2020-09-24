@@ -22,40 +22,60 @@ const SimField = styled.div`
   }
 `;
 
-export default function SimulationField({rows, columns}){
-  const [ grid, setGrid ] = useState({});
-  const [rowsArray, setRowsArray] = useState([]);
+export default function SimulationField({grid, setGrid, rows, columns, addCellToCheckLivingSet}){
+  // Dim an array of rows to make creating the simulation Field easier
+  const [ rowsArray, setRowsArray ] = useState([]);
   
+  // Use Effect only updates when the Rows or Columns state updates
   useEffect(() => {
-    let tempGrid = {}
-    let tempRowArray = []
+    // Dim a temporary grid to update grid state with
+    let tempGrid = {};
+    // Dim a temporary array to update rows array state with
+    let tempRowsArray = [];
+    // Loop while i is less than rows
     for(let i = 0; i < rows; i++){
-      let rowArray = []
+      // Dim an array for each row
+      let rowArray = [];
+      // Loop while j is less than columns
       for(let j = 0; j < columns; j++){
-        tempGrid = {...tempGrid, [`${i},${j}`]: addCell(i, j, tempGrid)}
-        rowArray.push(`${i},${j}`)
+        // Add a cell at the current row and column coords and add it to the current row array
+        tempGrid = {...tempGrid, [`${i},${j}`]: addCell(i, j, tempGrid)};
+        rowArray.push(`${i},${j}`);
       };
-      tempRowArray.push(rowArray)
+      // Add array to the array of rows
+      tempRowsArray.push(rowArray);
     };
-    setRowsArray(tempRowArray)
-    setGrid(tempGrid)
+    // For every cell in the grid find it's mates
+    Object.keys(tempGrid).forEach(cell => tempGrid[cell].getMates());
+    // Update state
+    setRowsArray(tempRowsArray);
+    setGrid(tempGrid);
 
-  }, [rows, columns])
+  }, [rows, columns]);
 
-  const updateGrid = (item) => {
+  // Update grid and Cells to check state when a user clicks on a cell
+  const updateGrid = (cellCoord) => {
     const newGrid = { ...grid };
-    newGrid[item].toggleAlive();
+    newGrid[cellCoord].toggleAlive();
     setGrid(newGrid);
-  }
+    addCellToCheckLivingSet(cellCoord);
+  };
+
   return(
     <SimField>
       <div>
+        {/* Return a row array for every item in rowsArray */}
         {rowsArray.map( row => {
-          return row.map( item => {
+          // Return a square cell for every cell in a row
+          return row.map( cell => {
             return(
-              <div key = {item}
-                onClick={() => updateGrid(item)}
-                style = {grid[item].alive? {backgroundColor: "darkgray"}: {backgroundColor: "white"}, {width: `${90/(rows)}%`}}
+              <div key = {cell}
+              // Change the color of the cell depending on if it's alive
+                onClick={() => updateGrid(cell)}
+                style = {{
+                  backgroundColor: grid[cell].alive? "darkgray": "white",
+                  width: `${90/(rows)}%`
+                }}
               >
                 <img src = "../data/1x1px.png" alt = ""/>
               </div>
@@ -65,4 +85,4 @@ export default function SimulationField({rows, columns}){
       </div>
     </SimField>
   );
-}
+};
