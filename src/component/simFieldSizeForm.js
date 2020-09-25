@@ -37,8 +37,10 @@ export default function SimFieldSizeForm({setCoord}){
           name = "rows"
           ref = {register({
             required: true,
-            pattern: /^[1-9]\d*\.?[0]*$/
+            pattern: /50|[1-4][0-9]|[1-9]|$/
           })}
+          // min = "1"
+          // max = "50"
           type = "number"
         />
         {errors.rows && <span>Please enter a positive whole number.</span>}
@@ -49,9 +51,11 @@ export default function SimFieldSizeForm({setCoord}){
           name = "columns" 
           ref = {register({
             required: true,
-            pattern: /^[1-9]\d*\.?[0]*$/
+            pattern: /50|[1-4][0-9]|[1-9]|$/
           })}
           type = "number"
+          // min = "1"
+          // max = "50"
         />
         {errors.columns && <span>Please enter a positive whole number.</span>}
       </label>

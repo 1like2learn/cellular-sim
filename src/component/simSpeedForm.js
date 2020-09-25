@@ -1,11 +1,6 @@
 import React from 'react'
 
 export default function SimSpeedForm({setSimSpeed}){
-
-const onSubmit = (data) => {
-  setSimSpeed(Number(data.simSpeed))
-}
-
   return (
   <form>
     <select>
