@@ -1,11 +1,30 @@
 import React, {useState} from 'react';
+import styled from 'styled-components'
 
 import SimulationField from './component/simulationField';
 import SimFieldSizeForm from './component/simFieldSizeForm';
 import SimControls from './component/simControls';
 import SimSpeedForm from './component/simSpeedForm'
 
-import './App.css';
+
+const Application = styled.div`
+  text-align: center;
+  margin: 0 auto;
+  div.container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    div.simFieldCont {
+      width: 40%;
+      max-width: 800px;
+    }
+    div.settingsCont {
+      width: 40%;
+
+    }
+  }
+
+`;
 
 const defaultCoord = {rows: 25, columns: 25};
 
@@ -42,33 +61,43 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <Application className="App">
       <h1>Cellular Simulation</h1>
-      
-      <SimFieldSizeForm
-        coord = {coord}
-        setCoord = {setCoord}
-      />
-      <SimSpeedForm
-        setSimSpeed = {setSimSpeed}
-      />
-
-      <SimControls
-        grid = {grid}
-        setGrid = {setGrid}
-        checkLivingSet = {checkLivingSet}
-        setCheckLivingSet = {setCheckLivingSet}
-        addCellToCheckLivingSet = {addCellToCheckLivingSet}
-        simSpeed = {simSpeed}
-      />
-      <SimulationField
-        addCellToCheckLivingSet = {addCellToCheckLivingSet}
-        rows={Number(coord.rows)}
-        columns={Number(coord.columns)}
-        grid = {grid}
-        setGrid = {setGrid}
-      />
-    </div>
+      <div className = "container">
+        <div className = "settingsCont">
+          <SimFieldSizeForm
+            coord = {coord}
+            setCoord = {setCoord}
+          />
+          <SimSpeedForm
+            setSimSpeed = {setSimSpeed}
+          />
+          <SimControls
+            grid = {grid}
+            setGrid = {setGrid}
+            checkLivingSet = {checkLivingSet}
+            setCheckLivingSet = {setCheckLivingSet}
+            addCellToCheckLivingSet = {addCellToCheckLivingSet}
+            simSpeed = {simSpeed}
+          />
+          <h2>The Rules:</h2>
+          <ul>
+            <li>If a living cell has less than two neighbors it dies of underpopulation.</li>
+            <li>If a dead cell has three neighbors it becomes alive.</li>
+            <li>If a living cell has more than three neighbors it dies of overpopulation.</li>
+          </ul>
+        </div>
+        <div className = "simFieldCont">
+          <SimulationField
+            addCellToCheckLivingSet = {addCellToCheckLivingSet}
+            rows={Number(coord.rows)}
+            columns={Number(coord.columns)}
+            grid = {grid}
+            setGrid = {setGrid}
+          />
+        </div>
+      </div>
+    </Application>
   );
 };
 
