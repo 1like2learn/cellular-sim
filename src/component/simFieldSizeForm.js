@@ -7,12 +7,11 @@ const SizeForm = styled.form`
   flex-direction: column;
   align-items: center;
   label {
-    padding: 2%;
+    padding: 4%;
   }
   button {
-    width: 30%;
-    padding: 0.5%;
-    margin: 1%;
+    padding: 4%;
+    margin: 4%;
   }
 `;
 
@@ -31,7 +30,7 @@ export default function SimFieldSizeForm({setCoord}){
 
   return (
     <SizeForm>
-      <label>Number of Rows:&nbsp;
+      <label>Rows:&nbsp;
         <input
           //create an input that will throw an error if it's not a positive whole number and is handled by react hook forms
           name = "rows"
@@ -45,7 +44,7 @@ export default function SimFieldSizeForm({setCoord}){
         />
         {errors.rows && <span>Please enter a positive whole number.</span>}
       </label>
-      <label>Number of Columns:&nbsp;
+      <label>Columns:&nbsp;
         <input 
           //create an input that will throw an error if it's not a positive whole number and is handled by react hook forms
           name = "columns" 

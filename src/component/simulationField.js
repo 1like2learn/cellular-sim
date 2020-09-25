@@ -5,14 +5,11 @@ import addCell from '../helpers/addCell';
 
 const SimField = styled.div`
   width: 100%;
-  border: red 3px solid;
-  max-width: 8000px;
   div {
     display: flex;
     justify-content: center;
     flex-direction: column;
     margin: 0 auto;
-    border: red 3px solid;
     width: 100%;
     div{
         display: flex;
@@ -28,6 +25,7 @@ const SimField = styled.div`
           height: 1px;
           width: 1px;
           padding: 50%;
+          border: black 1px solid;
         }
       }
     }

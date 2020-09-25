@@ -10,6 +10,9 @@ import SimSpeedForm from './component/simSpeedForm'
 const Application = styled.div`
   text-align: center;
   margin: 0 auto;
+  h1 {
+    margin: 2%;
+  }
   div.container {
     display: flex;
     flex-direction: row-reverse;
@@ -19,8 +22,28 @@ const Application = styled.div`
       max-width: 800px;
     }
     div.settingsCont {
+      display: flex;
+      flex-wrap: wrap;
       width: 40%;
-
+      justify-content: center;
+      align-items: center;
+      .simFieldSizeForm {
+        width: 47%;
+      }
+      div.simSpeedAndControlsDiv {
+        width: 47%;
+      }
+      div.rulesDiv {
+        text-align: start;
+        h2 {
+          margin: 2%;
+        }
+        ul {
+          li {
+            margin: 2%;
+          }
+        }
+      }
     }
   }
 
@@ -65,27 +88,32 @@ function App() {
       <h1>Cellular Simulation</h1>
       <div className = "container">
         <div className = "settingsCont">
+          <div className = "simSpeedAndControlsDiv">
+            <SimControls
+              grid = {grid}
+              setGrid = {setGrid}
+              checkLivingSet = {checkLivingSet}
+              setCheckLivingSet = {setCheckLivingSet}
+              addCellToCheckLivingSet = {addCellToCheckLivingSet}
+              simSpeed = {simSpeed}
+            />
+            <SimSpeedForm
+              setSimSpeed = {setSimSpeed}
+            />
+          </div>
           <SimFieldSizeForm
+            className = "simFieldSizeForm"
             coord = {coord}
             setCoord = {setCoord}
           />
-          <SimSpeedForm
-            setSimSpeed = {setSimSpeed}
-          />
-          <SimControls
-            grid = {grid}
-            setGrid = {setGrid}
-            checkLivingSet = {checkLivingSet}
-            setCheckLivingSet = {setCheckLivingSet}
-            addCellToCheckLivingSet = {addCellToCheckLivingSet}
-            simSpeed = {simSpeed}
-          />
-          <h2>The Rules:</h2>
-          <ul>
-            <li>If a living cell has less than two neighbors it dies of underpopulation.</li>
-            <li>If a dead cell has three neighbors it becomes alive.</li>
-            <li>If a living cell has more than three neighbors it dies of overpopulation.</li>
-          </ul>
+          <div className = "rulesDiv">
+            <h2>The Rules:</h2>
+            <ul>
+              <li>If a living cell has less than two neighbors it dies of underpopulation.</li>
+              <li>If a dead cell has three neighbors it becomes alive.</li>
+              <li>If a living cell has more than three neighbors it dies of overpopulation.</li>
+            </ul>
+          </div>
         </div>
         <div className = "simFieldCont">
           <SimulationField

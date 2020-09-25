@@ -1,4 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+
+const SimControlDiv = styled.div`
+
+  button {
+    padding: 4%;
+    margin: 4%;
+  }
+  div.generation {
+    padding: 4%;
+    margin: 4%;
+  }
+`;
 
 export default function SimControls({checkLivingSet, setCheckLivingSet, grid, setGrid, addCellToCheckLivingSet, simSpeed}){
   const [ myInterval, setMyInterval ] = useState();
@@ -61,7 +74,7 @@ export default function SimControls({checkLivingSet, setCheckLivingSet, grid, se
   }, [simRunning, setGrid]);
 
   return(
-    <div>
+    <SimControlDiv>
       <button
       // Only display the play button if sim is not running
         style = {{display: simRunning? 'none': 'inline-block'}}
@@ -74,7 +87,7 @@ export default function SimControls({checkLivingSet, setCheckLivingSet, grid, se
         onClick = {() => (setSimRunning(false), clearInterval(myInterval))}
       >Pause</button>
       <button onClick = {() => (clearLivingSet(), clearInterval(myInterval), setSimRunning(false))}>Clear</button>
-      <div>Generation: {generation}</div>
-    </div>
+      <div className = 'generation'>Generation: {generation}</div>
+    </SimControlDiv>
   );
 };
