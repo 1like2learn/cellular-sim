@@ -1,5 +1,20 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
+
+const SizeForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  label {
+    padding: 2%;
+  }
+  button {
+    width: 30%;
+    padding: 0.5%;
+    margin: 1%;
+  }
+`;
 
 export default function SimFieldSizeForm({setCoord}){
   // define react hook form functions
@@ -15,9 +30,8 @@ export default function SimFieldSizeForm({setCoord}){
   };
 
   return (
-    <div>
-      <form onSubmit ={handleSubmit(onSubmit)}>
-        <label>Number of Rows</label>
+    <SizeForm>
+      <label>Number of Rows:&nbsp;
         <input
           //create an input that will throw an error if it's not a positive whole number and is handled by react hook forms
           name = "rows"
@@ -27,8 +41,9 @@ export default function SimFieldSizeForm({setCoord}){
           })}
           type = "number"
         />
-        {errors.row && <span>Please enter a positive whole number.</span>}
-        <label>Number of Columns</label>
+        {errors.rows && <span>Please enter a positive whole number.</span>}
+      </label>
+      <label>Number of Columns:&nbsp;
         <input 
           //create an input that will throw an error if it's not a positive whole number and is handled by react hook forms
           name = "columns" 
@@ -38,9 +53,9 @@ export default function SimFieldSizeForm({setCoord}){
           })}
           type = "number"
         />
-        {errors.column && <span>Please enter a positive whole number.</span>}
-        <button type = "submit">Define Grid Size</button>
-      </form>
-    </div>
+        {errors.columns && <span>Please enter a positive whole number.</span>}
+      </label>
+      <button type = "submit" onClick = {handleSubmit(onSubmit)}>Define Simulation Bounds</button>
+    </SizeForm>
   );
 };

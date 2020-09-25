@@ -3,16 +3,19 @@ import React, {useState} from 'react';
 import SimulationField from './component/simulationField';
 import SimFieldSizeForm from './component/simFieldSizeForm';
 import SimControls from './component/simControls';
+import SimSpeedForm from './component/simSpeedForm'
 
 import './App.css';
 
-const defaultCoord = {rows: 10, columns: 10};
+const defaultCoord = {rows: 25, columns: 25};
 
 function App() {
   // Dimension the dimensions of the simulation field
   const [ coord, setCoord ] = useState(defaultCoord);
   // Dim a list of cells that could need to change
   const [ checkLivingSet, setCheckLivingSet ] = useState(new Set())
+  // Dim simulation speed
+  const [ simSpeed, setSimSpeed ] = useState(1000)
   // Dim a grid of cells that will be displayed
   const [ grid, setGrid ] = useState({})
   
@@ -26,6 +29,7 @@ function App() {
     if (!tempSet.has(tempCell)){
       tempSet.add(tempCell)
     };
+
     // Loop through the current cell's mates and add them
     // to the set if they aren't there already.
     tempCell.mates.forEach( mate => {
@@ -41,7 +45,13 @@ function App() {
     <div className="App">
       <h1>Cellular Simulation</h1>
       
-      <SimFieldSizeForm setCoord={setCoord}/>
+      <SimFieldSizeForm
+        coord = {coord}
+        setCoord = {setCoord}
+      />
+      <SimSpeedForm
+        setSimSpeed = {setSimSpeed}
+      />
 
       <SimControls
         grid = {grid}
@@ -49,6 +59,7 @@ function App() {
         checkLivingSet = {checkLivingSet}
         setCheckLivingSet = {setCheckLivingSet}
         addCellToCheckLivingSet = {addCellToCheckLivingSet}
+        simSpeed = {simSpeed}
       />
       <SimulationField
         addCellToCheckLivingSet = {addCellToCheckLivingSet}

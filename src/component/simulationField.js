@@ -6,17 +6,24 @@ import addCell from '../helpers/addCell';
 const SimField = styled.div`
   div {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
+    flex-direction: column;
     margin: 0 auto;
-    div {
-      margin: 0;
-      justify-content: center;
-
-      img {
-        height: 1px;
-        width: 1px;
-        padding: 50%;
+    div{
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        border: 0;
+      
+      div {
+        margin: 0;
+        justify-content: center;
+  
+        img {
+          height: 1px;
+          width: 1px;
+          padding: 50%;
+        }
       }
     }
   }
@@ -57,6 +64,11 @@ export default function SimulationField({grid, setGrid, rows, columns, addCellTo
   const updateGrid = (cellCoord) => {
     const newGrid = { ...grid };
     newGrid[cellCoord].toggleAlive();
+    if (newGrid[cellCoord].alive) {
+      newGrid[cellCoord].color = "#05445e"
+    } else {
+      newGrid[cellCoord].color = "#d4f1f4"
+    }
     setGrid(newGrid);
     addCellToCheckLivingSet(cellCoord);
   };
@@ -67,20 +79,27 @@ export default function SimulationField({grid, setGrid, rows, columns, addCellTo
         {/* Return a row array for every item in rowsArray */}
         {rowsArray.map( row => {
           // Return a square cell for every cell in a row
-          return row.map( cell => {
-            return(
-              <div key = {cell}
-              // Change the color of the cell depending on if it's alive
-                onClick={() => updateGrid(cell)}
-                style = {{
-                  backgroundColor: grid[cell].alive? "darkgray": "white",
-                  width: `${90/(rows)}%`
-                }}
-              >
-                <img src = "../data/1x1px.png" alt = ""/>
-              </div>
-            )
-          })
+          
+          return (
+            <div key = {`Row: ${row[0]}`}>
+              {row.map( cellCoord => {
+                return(
+                  <div key = {cellCoord}
+                  // Change the color of the cell depending on if it's alive
+                    onClick={() => updateGrid(cellCoord)}
+                    style = {{
+                      backgroundColor: `${grid[cellCoord].color}`,
+                      width: `${90/(rows)}%`
+                    }}
+                  >
+                    {/* <div>{cell}</div> */}
+                    <img src = "../data/1x1px.png" alt = ""/>
+                  </div>
+                )
+              })}
+            </div>
+          
+          )
         })}
       </div>
     </SimField>

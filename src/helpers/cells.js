@@ -13,6 +13,7 @@ export default class Cell{
     this.b = null;
     this.bR = null;
     this.mates = []
+    this.color = "#d4f1f4"
   }
 
   // Populates the cell's mates array with mates if they exist
@@ -48,12 +49,15 @@ export default class Cell{
     });
     // If a cell has fewer than two neighbors it dies
     if (aliveCount < 2 && this.alive){
+      this.color = "#75e6da"
       return `${this.row},${this.column}`
     // If a cell has three neighbors it becomes alive
     }else if (aliveCount === 3 && !this.alive){
+      this.color = "#05445e"
       return `${this.row},${this.column}`
     // If a cell has more than three neighbors it dies
     }else if (aliveCount > 3 && this.alive){
+      this.color = "#189ab4"
       return `${this.row},${this.column}`
     };
   };

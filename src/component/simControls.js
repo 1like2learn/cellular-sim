@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
 
-export default function SimControls({checkLivingSet, setCheckLivingSet, grid, setGrid, addCellToCheckLivingSet}){
+export default function SimControls({checkLivingSet, setCheckLivingSet, grid, setGrid, addCellToCheckLivingSet, simSpeed}){
   const [ myInterval, setMyInterval ] = useState();
+  const [ generation, setGeneration ] = useState(0);
   const [ simRunning, setSimRunning ] = useState(false);
 
   const clearLivingSet = () => {
     const tempGrid = {...grid};
     checkLivingSet.forEach((cell) => {
+      cell.color = "#d4f1f4";
       cell.alive = false;
     });
     setCheckLivingSet(new Set())
     setGrid(tempGrid)
+    setGeneration(0)
   }
   // If simRunning changes
+  let iterations = 0
   useEffect(() => {
     if (simRunning) {
+      iterations = 0;
       // Run this code every half second
       setMyInterval(setInterval( () => {
         // Create a copy of grid state
@@ -30,6 +35,9 @@ export default function SimControls({checkLivingSet, setCheckLivingSet, grid, se
           if (simulationResult) {
             tempListOfCellsToChange.push(simulationResult);
           };
+          if (tempListOfCellsToChange.length === 0) {
+            clearInterval(myInterval)
+          }
         });
         
         // Loop through each cell coordinate and toggle it's state
@@ -44,7 +52,10 @@ export default function SimControls({checkLivingSet, setCheckLivingSet, grid, se
         // Reset the grid state so the dom updates
         setGrid(tempGrid);
 
-      }, 500));
+        // Iterate Generation
+        iterations++
+        setGeneration(iterations)
+      }, simSpeed));
     // things that should be in the dependency array but will break it
     }//, setCheckLivingSet, checkLivingSet, addCellToCheckLivingSet, grid
   }, [simRunning, setGrid]);
@@ -62,7 +73,8 @@ export default function SimControls({checkLivingSet, setCheckLivingSet, grid, se
         style = {{display: simRunning? 'inline-block': 'none'}}
         onClick = {() => (setSimRunning(false), clearInterval(myInterval))}
       >Pause</button>
-      <button onClick = {() => clearLivingSet()}>Clear</button>
+      <button onClick = {() => (clearLivingSet(), clearInterval(myInterval), setSimRunning(false))}>Clear</button>
+      <div>Generation: {generation}</div>
     </div>
   );
 };
